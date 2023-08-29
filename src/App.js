@@ -37,9 +37,14 @@ function App() {
   return (
     <MapContainer
       center={[-15.025255971058684, -56.19486484951768]}
-      zoom={7}
+      zoom={6}
       scrollWheelZoom={true}
       className="leaflet-container"
+      maxBounds={[
+        [-25.0, -65.0],
+        [-6.0, -48.0],
+      ]}
+      minZoom={6}
     >
       <TileLayer
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'

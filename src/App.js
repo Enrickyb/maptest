@@ -5,26 +5,18 @@ import {
   LayerGroup,
   LayersControl,
   MapContainer,
-  Marker,
   Polygon,
   Popup,
   TileLayer,
   Tooltip,
+  GeoJSON,
 } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import "leaflet/dist/images/marker-shadow.png";
 import mtMunicipios from "./data/mtMunicipios.json";
 import { Icon } from "leaflet";
-
-const icon = new Icon({
-  iconUrl: "https://leafletjs.com/examples/custom-icons/leaf-green.png",
-  shadowUrl: "https://leafletjs.com/examples/custom-icons/leaf-shadow.png",
-  iconSize: [38, 95],
-  shadowSize: [50, 64],
-  iconAnchor: [22, 94],
-  shadowAnchor: [4, 62],
-  popupAnchor: [-3, -76],
-});
+import subbacias from "./data/subbacias.json";
+import subbaciaupg4 from "./data/subbaciaupg4.json";
 
 function App() {
   //Tratamento do arquivo JSON
@@ -34,16 +26,57 @@ function App() {
     });
   });
 
+  // Extraia as features do seu GeoJSON
+  const subbaciasFeatures = subbacias.features;
+  const subbaciasFeatures2 = subbaciaupg4.features;
+
+  // Função para estilizar as camadas GeoJSON
+  const style = {
+    fillColor: "blue",
+    color: "white",
+    weight: 2,
+    opacity: 1,
+    fillOpacity: 0.5,
+  };
+  const style2 = {
+    fillColor: "transparent",
+    color: "white",
+    weight: 2,
+    opacity: 1,
+    fillOpacity: 0.5,
+  };
+
+  function calculatePolygonBounds(polygons) {
+    let minLat = Infinity;
+    let maxLat = -Infinity;
+    let minLng = Infinity;
+    let maxLng = -Infinity;
+
+    polygons.forEach((polygon) => {
+      polygon.forEach((coord) => {
+        const [lat, lng] = coord.cords;
+        minLat = Math.min(minLat, lat);
+        maxLat = Math.max(maxLat, lat);
+        minLng = Math.min(minLng, lng);
+        maxLng = Math.max(maxLng, lng);
+      });
+    });
+
+    return [
+      [minLat, minLng],
+      [maxLat, maxLng],
+    ];
+  }
+
+  const polygonBounds = calculatePolygonBounds(polygons);
+
   return (
     <MapContainer
       center={[-15.025255971058684, -56.19486484951768]}
       zoom={6}
       scrollWheelZoom={true}
       className="leaflet-container"
-      maxBounds={[
-        [-25.0, -65.0],
-        [-6.0, -48.0],
-      ]}
+      maxBounds={polygonBounds}
       minZoom={6}
     >
       <TileLayer
@@ -52,13 +85,41 @@ function App() {
       />
 
       <LayersControl position="topright">
-        <LayersControl.Overlay name="Marker">
-          <Marker
-            position={[-15.025255971058684, -56.19486484951768]}
-            icon={icon}
-          >
-            <Popup>Demonstração de um marcador</Popup>
-          </Marker>
+        <LayersControl.Overlay name="subbacias">
+          <LayerGroup>
+            {/* Renderize as camadas GeoJSON */}
+            {subbaciasFeatures &&
+              subbaciasFeatures.map((feature, index) => (
+                <GeoJSON
+                  key={index}
+                  data={feature}
+                  style={style} // Aplica o estilo definido acima
+                >
+                  {/* Você pode adicionar popups ou informações adicionais aqui */}
+                  <Popup>
+                    Nome da SubBacia: {feature.properties.layer} <br />
+                    Área (km²): {feature.properties["Área km²"]}
+                  </Popup>
+                </GeoJSON>
+              ))}
+          </LayerGroup>
+          <LayerGroup>
+            {/* Renderize as camadas GeoJSON */}
+            {subbaciasFeatures2 &&
+              subbaciasFeatures2.map((feature, index) => (
+                <GeoJSON
+                  key={index}
+                  data={feature}
+                  style={style2} // Aplica o estilo definido acima
+                >
+                  {/* Você pode adicionar popups ou informações adicionais aqui */}
+                  <Popup>
+                    Nome da micro SubBacia: {feature.properties.SubBacia} <br />
+                    Área (km²): {feature.properties["Área km²"]}
+                  </Popup>
+                </GeoJSON>
+              ))}
+          </LayerGroup>
         </LayersControl.Overlay>
 
         <LayersControl.Overlay checked name="Circulos">

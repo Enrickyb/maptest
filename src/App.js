@@ -38,13 +38,50 @@ function App() {
     opacity: 1,
     fillOpacity: 0.5,
   };
-  const style2 = {
-    fillColor: "transparent",
-    color: "white",
-    weight: 2,
-    opacity: 1,
-    fillOpacity: 0.5,
-  };
+
+  function stylePolygon(text) {
+    if (text === "Médio Cuiabá") {
+      return {
+        fillColor: "red",
+        color: "black",
+        weight: 2,
+        opacity: 0.5,
+        fillOpacity: 0.5,
+      };
+    } else if (text === "Alto Cuiabá") {
+      return {
+        fillColor: "blue",
+        color: "black",
+        weight: 2,
+        opacity: 0.5,
+        fillOpacity: 0.5,
+      };
+    } else if (text === "Manso") {
+      return {
+        fillColor: "green",
+        color: "black",
+        weight: 2,
+        opacity: 0.5,
+        fillOpacity: 0.5,
+      };
+    } else if (text === "Baixo Cuiabá") {
+      return {
+        fillColor: "yellow",
+        color: "black",
+        weight: 2,
+        opacity: 0.5,
+        fillOpacity: 0.5,
+      };
+    } else if (text === "Coxipó") {
+      return {
+        fillColor: "orange",
+        color: "black",
+        weight: 2,
+        opacity: 0.5,
+        fillOpacity: 0.5,
+      };
+    }
+  }
 
   function calculatePolygonBounds(polygons) {
     let minLat = Infinity;
@@ -87,15 +124,9 @@ function App() {
       <LayersControl position="topright">
         <LayersControl.Overlay name="subbacias">
           <LayerGroup>
-            {/* Renderize as camadas GeoJSON */}
             {subbaciasFeatures &&
               subbaciasFeatures.map((feature, index) => (
-                <GeoJSON
-                  key={index}
-                  data={feature}
-                  style={style} // Aplica o estilo definido acima
-                >
-                  {/* Você pode adicionar popups ou informações adicionais aqui */}
+                <GeoJSON key={index} data={feature} style={style}>
                   <Popup>
                     Nome da SubBacia: {feature.properties.layer} <br />
                     Área (km²): {feature.properties["Área km²"]}
@@ -104,13 +135,12 @@ function App() {
               ))}
           </LayerGroup>
           <LayerGroup>
-            {/* Renderize as camadas GeoJSON */}
             {subbaciasFeatures2 &&
               subbaciasFeatures2.map((feature, index) => (
                 <GeoJSON
                   key={index}
                   data={feature}
-                  style={style2} // Aplica o estilo definido acima
+                  style={stylePolygon(feature.properties.SubBacia)}
                 >
                   {/* Você pode adicionar popups ou informações adicionais aqui */}
                   <Popup>
@@ -122,58 +152,12 @@ function App() {
           </LayerGroup>
         </LayersControl.Overlay>
 
-        <LayersControl.Overlay checked name="Circulos">
-          <LayerGroup>
-            <Circle
-              center={[-15.025255971058684, -56.19486484951768]}
-              pathOptions={{ fillColor: "blue" }}
-              radius={200}
-            />
-            <Circle
-              center={[-15.035255971058684, -56.19486484951768]}
-              pathOptions={{ fillColor: "red" }}
-              radius={500}
-              stroke={false}
-            />
-            <LayerGroup>
-              <Circle
-                center={[51.51, -0.08]}
-                pathOptions={{ color: "green", fillColor: "green" }}
-                radius={100}
-              />
-            </LayerGroup>
-          </LayerGroup>
-        </LayersControl.Overlay>
-
-        <LayersControl.Overlay name="Municipios Mato-Grosso (S)">
+        <LayersControl.Overlay name="Municipios Mato-Grosso">
           <FeatureGroup>
             {polygons.map((polygon) => {
               return (
                 <Polygon
-                  pathOptions={
-                    polygon[0].city.startsWith("S")
-                      ? { color: "blue" }
-                      : { color: "red" }
-                  }
-                  positions={polygon.map((coord) => coord.cords)}
-                >
-                  <Tooltip sticky>{polygon[0].city}</Tooltip>
-                </Polygon>
-              );
-            })}
-          </FeatureGroup>
-        </LayersControl.Overlay>
-
-        <LayersControl.Overlay name="Municipios Mato-Grosso (B)">
-          <FeatureGroup>
-            {polygons.map((polygon) => {
-              return (
-                <Polygon
-                  pathOptions={
-                    polygon[0].city.startsWith("B")
-                      ? { color: "blue" }
-                      : { color: "red" }
-                  }
+                  pathOptions={{ color: "blue" }}
                   positions={polygon.map((coord) => coord.cords)}
                 >
                   <Tooltip sticky>{polygon[0].city}</Tooltip>

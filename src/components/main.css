@@ -1,0 +1,5 @@
+.main{
+    display: flex;
+    padding: 50px;
+    gap: 30px;
+}

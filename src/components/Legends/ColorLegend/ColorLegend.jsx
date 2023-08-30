@@ -1,7 +1,7 @@
 import React from "react";
-import "./legend.css"; // Importe o arquivo CSS para estilizar a legenda
+import "./colorLegend.css"; // Importe o arquivo CSS para estilizar a legenda
 
-function Legend() {
+function ColorLegend() {
   return (
     <div className="legend">
       <div className="legend-item">
@@ -28,4 +28,4 @@ function Legend() {
   );
 }
 
-export default Legend;
+export default ColorLegend;

@@ -2,8 +2,13 @@ import { LayerGroup, LayersControl, GeoJSON, Popup } from "react-leaflet";
 
 import subbacias from "../../data/subbacias.json";
 import subbaciaupg4 from "../../data/subbaciaupg4.json";
+import getColor from "../../provider/colorProvider";
+import { mapContext } from "../../contexts/mapContext";
+import { useContext } from "react";
 
 export default function BaciasLayer() {
+  const { selectedOption } = useContext(mapContext);
+
   const subbaciasFeatures = subbacias.features;
   const subbaciasFeatures2 = subbaciaupg4.features;
 
@@ -51,6 +56,9 @@ export default function BaciasLayer() {
     }
   }
 
+  const corInicial = { r: 255, g: 0, b: 0 }; // Cor inicial (vermelho)
+  const corFinal = { r: 0, g: 0, b: 255 }; // Cor final (azul)
+
   return (
     <LayersControl.Overlay name="subbacias" checked>
       <LayerGroup>
@@ -74,7 +82,19 @@ export default function BaciasLayer() {
             <GeoJSON
               key={index}
               data={feature}
-              style={stylePolygon(feature.properties.SubBacia)}
+              style={{
+                fillColor: getColor(
+                  feature.properties[selectedOption],
+                  1000,
+                  2000,
+                  corInicial,
+                  corFinal
+                ),
+                color: "#292929",
+                weight: 2,
+                opacity: 0.5,
+                fillOpacity: 1,
+              }}
             >
               <Popup>
                 Nome da micro SubBacia: {feature.properties.SubBacia} <br />

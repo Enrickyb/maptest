@@ -1,17 +1,4 @@
-/* Importe a biblioteca Font Awesome */
-@import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css");
-
-.leaflet-container{
-  height: 500px;
-  width: 700px;
-  margin: 100px;
-}
-
-
-/* Estilize o ícone do botão de tela cheia */
-.leaflet-fullscreen-icon::before {
-  content: "\f062"; /* Código Unicode do ícone (seta para cima) */
-  font-family: "Font Awesome 5 Free"; /* Nome da fonte */
-  font-weight: 900; /* Peso da fonte */
-  font-size: 16px; /* Tamanho do ícone */
+.App{
+  display: flex;
+  padding: 50px;
 }

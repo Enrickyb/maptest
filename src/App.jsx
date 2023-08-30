@@ -5,6 +5,8 @@ import "leaflet/dist/images/marker-shadow.png";
 import mtMunicipios from "./data/mtMunicipios.json";
 import Legend from "./components/Legend/Legend";
 import BaciasLayer from "./components/BaciasLayer/BaciasLayer";
+import { FullscreenControl } from "react-leaflet-fullscreen";
+import { AiOutlineExpand } from "react-icons/ai";
 
 function App() {
   const polygons = mtMunicipios.features.map((feature) => {
@@ -55,7 +57,10 @@ function App() {
         <BaciasLayer />
       </LayersControl>
 
-      <Legend />
+      <FullscreenControl
+        position="bottomright"
+        content={<AiOutlineExpand size={20} color={"#black"} />}
+      />
     </MapContainer>
   );
 }

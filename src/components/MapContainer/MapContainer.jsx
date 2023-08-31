@@ -5,7 +5,6 @@ import BaciasLayer from "../BaciasLayer/BaciasLayer";
 import mtMunicipios from "../../data/mtMunicipios.json";
 
 import "./MapContainer.css";
-import ColorLegend from "../Legends/ColorLegend/ColorLegend";
 
 export default function Map() {
   const polygons = mtMunicipios.features.map((feature) => {
@@ -57,7 +56,7 @@ export default function Map() {
       </LayersControl>
 
       <FullscreenControl position="bottomleft" content={"[  ]"} />
-      <ColorLegend />
+      {/*<ColorLegend />*/}
     </MapContainer>
   );
 }

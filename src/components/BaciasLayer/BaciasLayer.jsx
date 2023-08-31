@@ -1,16 +1,44 @@
 import { LayerGroup, LayersControl, GeoJSON, Popup } from "react-leaflet";
-
-import subbacias from "../../data/subbacias.json";
-import subbaciaupg4 from "../../data/subbaciaupg4.json";
 import getColor from "../../provider/colorProvider";
 import { mapContext } from "../../contexts/mapContext";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 
 export default function BaciasLayer() {
-  const { selectedOption } = useContext(mapContext);
+  const {
+    selectedOption,
+    microBaciaBorder,
+    subbaciasFeatures,
+    subbaciasFeatures2,
+  } = useContext(mapContext);
+  const [option, setOption] = useState(selectedOption);
+  const [border, setBorder] = useState(true);
+  const [maxValue, setMaxValue] = useState(0);
+  const [minValue, setMinValue] = useState(0);
 
-  const subbaciasFeatures = subbacias.features;
-  const subbaciasFeatures2 = subbaciaupg4.features;
+  useEffect(() => {
+    const calculateMinMax = () => {
+      let max = -Infinity;
+      let min = Infinity;
+
+      subbaciasFeatures2.forEach((feature) => {
+        const value = feature.properties[selectedOption];
+        if (value > max) {
+          max = value;
+        }
+        if (value < min) {
+          min = value;
+        }
+      });
+      setMaxValue(max);
+      setMinValue(min);
+    };
+    calculateMinMax();
+  }, [selectedOption, subbaciasFeatures2]);
+
+  useEffect(() => {
+    setBorder(microBaciaBorder);
+    setOption(selectedOption);
+  }, [microBaciaBorder, selectedOption]);
 
   function stylePolygon(text) {
     if (text === "Médio Cuiabá") {
@@ -83,14 +111,24 @@ export default function BaciasLayer() {
               key={index}
               data={feature}
               style={{
-                fillColor: getColor(
-                  feature.properties[selectedOption],
-                  1000,
-                  2000,
-                  corInicial,
-                  corFinal
-                ),
-                color: "#292929",
+                fillColor: option
+                  ? getColor(
+                      feature.properties[option],
+                      minValue,
+                      maxValue,
+                      corInicial,
+                      corFinal
+                    )
+                  : stylePolygon(feature.properties.SubBacia).fillColor,
+                color: border
+                  ? "black"
+                  : getColor(
+                      feature.properties[option],
+                      minValue,
+                      maxValue,
+                      corInicial,
+                      corFinal
+                    ),
                 weight: 2,
                 opacity: 0.5,
                 fillOpacity: 1,
@@ -98,7 +136,7 @@ export default function BaciasLayer() {
             >
               <Popup>
                 Nome da micro SubBacia: {feature.properties.SubBacia} <br />
-                Precipitação: {feature.properties.Precipitac}mm
+                {option}: {feature.properties[option]}
               </Popup>
             </GeoJSON>
           ))}

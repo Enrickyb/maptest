@@ -7,6 +7,8 @@ export const mapContext = createContext();
 export const MapProvider = ({ children }) => {
   const [selectedOption, setSelectedOption] = useState();
   const [microBaciaBorder, setMicroBaciaBorder] = useState(true);
+  const [inicialColor, setInicialColor] = useState({ r: 255, g: 0, b: 0 });
+  const [finalColor, setFinalColor] = useState({ r: 0, g: 0, b: 255 });
 
   const subbaciasFeatures = subbacias.features;
   const subbaciasFeatures2 = subbaciaupg4.features;
@@ -19,6 +21,14 @@ export const MapProvider = ({ children }) => {
     setMicroBaciaBorder(!microBaciaBorder);
   }
 
+  function handleSetInicialColor(color) {
+    setInicialColor(color.rgb);
+  }
+
+  function handleSetFinalColor(color) {
+    setFinalColor(color.rgb);
+  }
+
   return (
     <mapContext.Provider
       value={{
@@ -28,6 +38,10 @@ export const MapProvider = ({ children }) => {
         handleSetMicroBaciaBorder,
         subbaciasFeatures,
         subbaciasFeatures2,
+        handleSetInicialColor,
+        handleSetFinalColor,
+        inicialColor,
+        finalColor,
       }}
     >
       {children}

@@ -9,11 +9,15 @@ export default function BaciasLayer() {
     microBaciaBorder,
     subbaciasFeatures,
     subbaciasFeatures2,
+    inicialColor,
+    finalColor,
   } = useContext(mapContext);
   const [option, setOption] = useState(selectedOption);
   const [border, setBorder] = useState(true);
   const [maxValue, setMaxValue] = useState(0);
   const [minValue, setMinValue] = useState(0);
+  const [corInicial, setCorInicial] = useState(inicialColor);
+  const [corFinal, setCorFinal] = useState(finalColor);
 
   useEffect(() => {
     const calculateMinMax = () => {
@@ -39,6 +43,11 @@ export default function BaciasLayer() {
     setBorder(microBaciaBorder);
     setOption(selectedOption);
   }, [microBaciaBorder, selectedOption]);
+
+  useEffect(() => {
+    setCorInicial(inicialColor);
+    setCorFinal(finalColor);
+  }, [inicialColor, finalColor]);
 
   function stylePolygon(text) {
     if (text === "Médio Cuiabá") {
@@ -83,9 +92,6 @@ export default function BaciasLayer() {
       };
     }
   }
-
-  const corInicial = { r: 255, g: 0, b: 0 }; // Cor inicial (vermelho)
-  const corFinal = { r: 0, g: 0, b: 255 }; // Cor final (azul)
 
   return (
     <LayersControl.Overlay name="subbacias" checked>

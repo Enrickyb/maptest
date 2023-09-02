@@ -4,6 +4,7 @@ import Select from "react-select";
 import { mapContext } from "../contexts/mapContext";
 
 import "./main.css";
+import ColorPicker from "./ColorPicker/ColorPicker";
 
 export default function Main() {
   const options = [
@@ -55,14 +56,21 @@ export default function Main() {
     { value: "F_Cons_m3s", label: "F_Cons_m3s" },
     { value: "AbasTotal", label: "AbasTotal" },
   ];
+  const {
+    handleSetInicialColor,
+    handleSetFinalColor,
+    inicialColor,
+    finalColor,
+  } = useContext(mapContext);
 
-  const { handleSelectOption, handleSetMicroBaciaBorder, selectedOption } =
+  const { handleSelectOption, handleSetMicroBaciaBorder } =
     useContext(mapContext);
+
   return (
     <div className="main">
       <Map />
 
-      <div>
+      <div className="inputs-container">
         <Select
           options={options}
           onChange={(e) => {
@@ -77,6 +85,21 @@ export default function Main() {
             onChange={handleSetMicroBaciaBorder}
           />
         </label>
+
+        <div className="color-picker-container">
+          <label>
+            Cor inicial
+            <ColorPicker
+              color={inicialColor}
+              onChange={handleSetInicialColor}
+            />
+          </label>
+
+          <label>
+            Cor final
+            <ColorPicker color={finalColor} onChange={handleSetFinalColor} />
+          </label>
+        </div>
       </div>
     </div>
   );

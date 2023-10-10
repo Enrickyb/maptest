@@ -29,6 +29,11 @@ export const MapProvider = ({ children }) => {
     setFinalColor(color.rgb);
   }
 
+  function handleResetColors() {
+    setInicialColor({ r: 255, g: 0, b: 0 });
+    setFinalColor({ r: 0, g: 0, b: 255 });
+  }
+
   return (
     <mapContext.Provider
       value={{
@@ -42,6 +47,7 @@ export const MapProvider = ({ children }) => {
         handleSetFinalColor,
         inicialColor,
         finalColor,
+        handleResetColors,
       }}
     >
       {children}

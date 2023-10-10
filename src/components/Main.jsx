@@ -61,6 +61,7 @@ export default function Main() {
     handleSetFinalColor,
     inicialColor,
     finalColor,
+    handleResetColors,
   } = useContext(mapContext);
 
   const { handleSelectOption, handleSetMicroBaciaBorder } =
@@ -94,11 +95,15 @@ export default function Main() {
               onChange={handleSetInicialColor}
             />
           </label>
-
           <label>
             Cor final
             <ColorPicker color={finalColor} onChange={handleSetFinalColor} />
           </label>
+          <div>
+            <button type="button" onClick={handleResetColors}>
+              Resetar cores
+            </button>
+          </div>
         </div>
       </div>
     </div>

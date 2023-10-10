@@ -56,7 +56,6 @@ export default function Map() {
       </LayersControl>
 
       <FullscreenControl position="bottomleft" content={"[  ]"} />
-      {/*<ColorLegend />*/}
     </MapContainer>
   );
 }

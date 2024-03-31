@@ -1,10 +1,19 @@
 import React from "react";
-import { LayersControl, TileLayer, MapContainer } from "react-leaflet";
+import {
+  MapContainer,
+  TileLayer,
+  LayersControl,
+  FeatureGroup,
+  Circle,
+} from "react-leaflet";
 import { FullscreenControl } from "react-leaflet-fullscreen";
+import { EditControl } from "react-leaflet-draw";
 import BaciasLayer from "../BaciasLayer/BaciasLayer";
 import mtMunicipios from "../../data/mtMunicipios.json";
-
+import "leaflet/dist/leaflet.css";
+import "leaflet-draw/dist/leaflet.draw.css";
 import "./MapContainer.css";
+import { featureGroup } from "leaflet";
 
 export default function Map() {
   const polygons = mtMunicipios.features.map((feature) => {
@@ -54,6 +63,16 @@ export default function Map() {
       <LayersControl position="topright">
         <BaciasLayer />
       </LayersControl>
+
+      <FeatureGroup>
+        <EditControl
+          position="topright"
+          draw={{
+            rectangle: false,
+          }}
+        />
+        <Circle center={[51.51, -0.06]} radius={200} />
+      </FeatureGroup>
 
       <FullscreenControl position="bottomleft" content={"[  ]"} />
     </MapContainer>

@@ -2,6 +2,7 @@
   "name": "maptest",
   "version": "0.1.0",
   "private": true,
+  "homepage": "UPG4Versao3JavaPostgreSQL",
   "dependencies": {
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
@@ -12,6 +13,7 @@
     "react-dom": "^18.2.0",
     "react-icons": "^4.10.1",
     "react-leaflet": "^4.2.1",
+    "react-leaflet-draw": "^0.20.4",
     "react-leaflet-fullscreen": "^4.1.0",
     "react-scripts": "5.0.1",
     "react-select": "^5.7.4",

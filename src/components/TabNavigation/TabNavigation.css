@@ -1,0 +1,33 @@
+.tab-navigation{
+    background-color: aliceblue;
+    padding: 20px;
+    min-width: 900px;
+    min-height: 550px;
+
+}
+
+.tabs{
+   display: flex;
+   flex-direction: row;
+   gap: 100px;
+
+}
+
+.divider{
+    border: 1px solid black;
+    margin-top: 10px;
+    width: 100%;
+
+}
+.tab-content{
+    padding: 20px;
+}
+
+.tab{
+    cursor: pointer;
+}
+
+.active{
+    background-color: aliceblue;
+    color: red;
+}

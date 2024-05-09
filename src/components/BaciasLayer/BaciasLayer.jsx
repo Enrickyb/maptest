@@ -11,8 +11,9 @@ export default function BaciasLayer() {
     subbaciasFeatures2,
     inicialColor,
     finalColor,
+    loading,
   } = useContext(mapContext);
-  const [option, setOption] = useState(selectedOption);
+  const [option, setOption] = useState("Q95");
   const [border, setBorder] = useState(true);
   const [maxValue, setMaxValue] = useState(0);
   const [minValue, setMinValue] = useState(0);
@@ -24,17 +25,22 @@ export default function BaciasLayer() {
       let max = -Infinity;
       let min = Infinity;
 
-      subbaciasFeatures2.forEach((feature) => {
-        const value = feature.properties[selectedOption];
-        if (value > max) {
-          max = value;
-        }
-        if (value < min) {
-          min = value;
-        }
-      });
-      setMaxValue(max);
-      setMinValue(min);
+      if (subbaciasFeatures2) {
+        subbaciasFeatures2.forEach((feature) => {
+          const value = feature.properties[selectedOption];
+
+          if (value > max) {
+            max = value;
+          }
+          if (value < min) {
+            min = value;
+          }
+        });
+        console.log("max", max);
+        console.log("min", min);
+        setMaxValue(max);
+        setMinValue(min);
+      }
     };
     calculateMinMax();
   }, [selectedOption, subbaciasFeatures2]);
@@ -111,7 +117,8 @@ export default function BaciasLayer() {
           ))}
       </LayerGroup>
       <LayerGroup>
-        {subbaciasFeatures2 &&
+        {loading ? (
+          subbaciasFeatures2 &&
           subbaciasFeatures2.map((feature, index) => (
             <GeoJSON
               key={index}
@@ -145,7 +152,10 @@ export default function BaciasLayer() {
                 {option}: {feature.properties[option]}
               </Popup>
             </GeoJSON>
-          ))}
+          ))
+        ) : (
+          <div>Carregando...</div>
+        )}
       </LayerGroup>
     </LayersControl.Overlay>
   );

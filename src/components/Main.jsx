@@ -5,103 +5,174 @@ import { mapContext } from "../contexts/mapContext";
 
 import "./main.css";
 import ColorPicker from "./ColorPicker/ColorPicker";
+import TabNavigation from "./TabNavigation/TabNavigation";
+import SelectInput from "./SelectInput/SelectInput";
 
 export default function Main() {
   const options = [
-    { value: "Precipitac", label: "Precipitação" },
+    { value: "f_retirada", label: "f_retirada" },
+    { value: "f_retorno", label: "f_retorno" },
+    { value: "f_consumo", label: "f_consumo" },
+    { value: "f_fos_t", label: "f_fos_t" },
+    { value: "f_fos_r", label: "f_fos_r" },
+    { value: "f_dbo_t", label: "f_dbo_t" },
+    { value: "f_dbo_r", label: "f_dbo_r" },
+    { value: "f_ni_r", label: "f_ni_r" },
     { value: "Q95", label: "Q95" },
-    { value: "QM", label: "QM" },
-    { value: "TeRetoM3s", label: "TeRetoM3s" },
-    { value: "TeConsM3s", label: "TeConsM3s" },
-    { value: "EvCons_m3s", label: "EvCons_m3s" },
-    { value: "PiReti_m3s", label: "PiReti_m3s" },
-    { value: "PiReto_m3s", label: "PiReto_m3s" },
-    { value: "PiCons_m3s", label: "PiCons_m3s" },
-    { value: "Pi_N_kgd", label: "Pi_N_kgd" },
-    { value: "Pi_P_kgd", label: "Pi_P_kgd" },
-    { value: "Pi_DBO_kgd", label: "Pi_DBO_kgd" },
-    { value: "ArReti_m3s", label: "ArReti_m3s" },
-    { value: "ArReto_m3s", label: "ArReto_m3s" },
-    { value: "ArCons_m3s", label: "ArCons_m3s" },
-    { value: "AuReti_m3s", label: "AuReti_m3s" },
-    { value: "AgRetiM3s", label: "AgRetiM3s" },
-    { value: "AgRetoM3s", label: "AgRetoM3s" },
-    { value: "AgConsM3s", label: "AgConsM3s" },
-    { value: "AgFosKgd", label: "AgFosKgd" },
-    { value: "AgFosrKgd", label: "AgFosrKgd" },
-    { value: "DeRetiM3s", label: "DeRetiM3s" },
-    { value: "DeRetoM3s", label: "DeRetoM3s" },
-    { value: "DeConsM3s", label: "DeConsM3s" },
-    { value: "DeDBO5Kgd", label: "DeDBO5Kgd" },
-    { value: "DeDBOr5Kgd", label: "DeDBOr5Kgd" },
-    { value: "DeFosKgd", label: "DeFosKgd" },
-    { value: "DeFosrKgd", label: "DeFosrKgd" },
-    { value: "EuReto_Ls", label: "EuReto_Ls" },
-    { value: "EuDBOrKGD", label: "EuDBOrKGD" },
-    { value: "InReti_m3s", label: "InReti_m3s" },
-    { value: "InDBO_gl", label: "InDBO_gl" },
-    { value: "InReto_LD", label: "InReto_LD" },
-    { value: "InDBOr_kgd", label: "InDBOr_kgd" },
-    { value: "InDBO_kgd", label: "InDBO_kgd" },
-    { value: "InReto_m3s", label: "InReto_m3s" },
-    { value: "MiReti_m3s", label: "MiReti_m3s" },
-    { value: "MiReto_m3s", label: "MiReto_m3s" },
-    { value: "MiCons_m3s", label: "MiCons_m3s" },
-    { value: "IrReti_m3s", label: "IrReti_m3s" },
-    { value: "IrCons_m3s", label: "IrCons_m3s" },
-    { value: "IrReto_m3s", label: "IrReto_m3s" },
-    { value: "EuReto_m3s", label: "EuReto_m3s" },
-    { value: "F_Reti_m3s", label: "F_Reti_m3s" },
-    { value: "F_Reto_m3s", label: "F_Reto_m3s" },
-    { value: "F_Cons_m3s", label: "F_Cons_m3s" },
-    { value: "AbasTotal", label: "AbasTotal" },
+    { value: "comp", label: "comp" },
+    { value: "Q95_r", label: "Q95_r" },
+    { value: "Q95_r_perc", label: "Q95_r_perc" },
+    { value: "Q95_c", label: "Q95_c" },
+    { value: "Q95_c_perc", label: "Q95_c_perc" },
+    { value: "arsub_ri", label: "arsub_ri" },
+    { value: "arsub_ro", label: "arsub_ro" },
+    { value: "arsub_co", label: "arsub_co" },
+    { value: "arsup_ri", label: "arsup_ri" },
+    { value: "arsup_ro", label: "arsup_ro" },
+    { value: "arsup_co", label: "arsup_co" },
+    { value: "ausub_ri", label: "ausub_ri" },
+    { value: "ausub_ro", label: "ausub_ro" },
+    { value: "ausub_co", label: "ausub_co" },
+    { value: "ausup_ri", label: "ausup_ri" },
+    { value: "ausup_ro", label: "ausup_ro" },
+    { value: "ausup_co", label: "ausup_co" },
+    { value: "ag_ri", label: "ag_ri" },
+    { value: "ag_ro", label: "ag_ro" },
+    { value: "ag_co", label: "ag_co" },
+    { value: "ag_fos_t", label: "ag_fos_t" },
+    { value: "ag_fos_r", label: "ag_fos_r" },
+    { value: "de_ri", label: "de_ri" },
+    { value: "de_ro", label: "de_ro" },
+    { value: "de_co", label: "de_co" },
+    { value: "de_dbo_r", label: "de_dbo_r" },
+    { value: "de_fos_r", label: "de_fos_r" },
+    { value: "es_ro", label: "es_ro" },
+    { value: "es_fos_r", label: "es_fos_r" },
+    { value: "es_dbo_r", label: "es_dbo_r" },
+    { value: "in_ri", label: "in_ri" },
+    { value: "in_ro", label: "in_ro" },
+    { value: "in_co", label: "in_co" },
+    { value: "in_dbo_r", label: "in_dbo_r" },
+    { value: "in_dbo_t", label: "in_dbo_t" },
+    { value: "mi_ri", label: "mi_ri" },
+    { value: "mi_ro", label: "mi_ro" },
+    { value: "mi_co", label: "mi_co" },
+    { value: "pic_ni_r", label: "pic_ni_r" },
+    { value: "pic_fos_r", label: "pic_fos_r" },
+    { value: "pic_dbo_r", label: "pic_dbo_r" },
+    { value: "pi1_ri", label: "pi1_ri" },
+    { value: "pi1_ro", label: "pi1_ro" },
+    { value: "pi1_co", label: "pi1_co" },
+    { value: "pi2_ri", label: "pi2_ri" },
+    { value: "pi2_ro", label: "pi2_ro" },
+    { value: "pi2_co", label: "pi2_co" },
+    { value: "re_ri", label: "re_ri" },
+    { value: "re_ro", label: "re_ro" },
+    { value: "re_co", label: "re_co" },
+    { value: "te_ri", label: "te_ri" },
+    { value: "te_ro", label: "te_ro" },
+    { value: "te_co", label: "te_co" },
   ];
+
   const {
     handleSetInicialColor,
     handleSetFinalColor,
     inicialColor,
     finalColor,
     handleResetColors,
+    handleSelectAno,
+    handleChangeInformations,
+    handleSelectCenario,
+    ano,
   } = useContext(mapContext);
-
   const { handleSelectOption, handleSetMicroBaciaBorder } =
     useContext(mapContext);
 
+  const tabs = [
+    {
+      label: "Mapa",
+      content: (
+        <div className="map-container">
+          <Map />
+        </div>
+      ),
+    },
+    {
+      label: "Gráficos",
+      content: <div>Graficos</div>,
+    },
+  ];
+
+  const informations = {
+    2019: ["base"],
+    2028: ["moderado", "acelerado", "tendencial"],
+    2033: ["moderado", "acelerado", "tendencial"],
+    2043: ["moderado", "acelerado", "tendencial"],
+  };
   return (
     <div className="main">
-      <Map />
-
-      <div className="inputs-container">
-        <Select
-          options={options}
-          onChange={(e) => {
-            handleSelectOption(e.value);
-          }}
-        />
-        <label>
-          Borda
-          <input
-            type="checkbox"
-            defaultChecked
-            onChange={handleSetMicroBaciaBorder}
-          />
-        </label>
-
-        <div className="color-picker-container">
-          <label>
-            Cor inicial
-            <ColorPicker
-              color={inicialColor}
-              onChange={handleSetInicialColor}
-            />
-          </label>
-          <label>
-            Cor final
-            <ColorPicker color={finalColor} onChange={handleSetFinalColor} />
-          </label>
+      <header className="header">
+        <h1>NIESA</h1>
+      </header>
+      <div className="container">
+        <div className="sub-container colorr">
           <div>
-            <button type="button" onClick={handleResetColors}>
-              Resetar cores
+            <label>
+              <p>Tipo de análise</p>
+            </label>
+            <SelectInput options={options} onChange={handleSelectOption} />
+          </div>
+          <div>
+            <label>
+              <p>Tipo de busca</p>
+            </label>
+            <SelectInput
+              onChange={() => {
+                console.log("");
+              }}
+              options={[
+                { value: "subbacia", label: "Subbacia" },
+                { value: "regioes", label: "Regiões " },
+              ]}
+            />
+          </div>
+        </div>
+
+        <div className="">
+          <TabNavigation tabs={tabs} />
+        </div>
+
+        <div className="sub-container colorr">
+          <div className="input-container">
+            <label>Cenário</label>
+            <SelectInput
+              onChange={handleSelectCenario}
+              defaultv={"Selecione"}
+              options={informations[ano].map((cenario) => ({
+                value: cenario,
+                label: cenario,
+              }))}
+            />
+          </div>
+          <div className="input-container">
+            <label>Ano</label>
+            <SelectInput
+              defaultv={"Selecione"}
+              onChange={handleSelectAno}
+              options={Object.keys(informations).map((year) => ({
+                value: year,
+                label: year,
+              }))}
+            />
+          </div>
+          <div>
+            <button
+              className="change-btn"
+              onClick={() => {
+                handleChangeInformations();
+              }}
+            >
+              change
             </button>
           </div>
         </div>

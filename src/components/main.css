@@ -1,11 +1,12 @@
 .main{
+    padding: 30px;
+}
+.map-container{
+    position: relative;
     display: flex;
-    width: 95vw;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 50px;
-    gap: 30px;
+    gap: 20px;
+
 }
 .change-btn{
 
@@ -29,8 +30,11 @@
     
 }
 .header{
-    width: 100vw;
+    width: 100%;
     margin: auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
 
 }
 

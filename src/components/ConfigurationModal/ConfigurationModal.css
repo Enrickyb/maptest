@@ -1,0 +1,52 @@
+.configuration-modal{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: fixed;
+    gap: 30px;
+    right: 15%;
+    bottom: 15%;
+    width: 70%;
+    height: 70%;
+    background-color: darkgray;
+    z-index: 9999;
+    border-radius: 16px;
+
+    
+}
+.title{
+    font-size: 24px;
+    color: white;
+    margin-bottom: 20px;    
+    color: white;
+}
+.color-picker-container{
+    display: flex;
+    flex-direction: row;
+    gap: 30px;
+
+}
+.svg-btn{
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+
+}
+.svg-btn > svg{
+    width: 30px;
+    height: 30px;
+    fill: black;
+    cursor: pointer;
+    background-color: transparent;
+    border: none;
+    
+}
+.close-button{
+    position: absolute;
+    top: 5px;
+    right: 20px;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    color: white;
+}

@@ -7,9 +7,12 @@ import "./main.css";
 import ColorPicker from "./ColorPicker/ColorPicker";
 import TabNavigation from "./TabNavigation/TabNavigation";
 import SelectInput from "./SelectInput/SelectInput";
+import { ConfigurationModa } from "./ConfigurationModal/ConfigurationModal";
+import { Legend } from "./Legend/Legend";
 
 export default function Main() {
   const options = [
+    { value: "Q95", label: "Q95" },
     { value: "f_retirada", label: "f_retirada" },
     { value: "f_retorno", label: "f_retorno" },
     { value: "f_consumo", label: "f_consumo" },
@@ -18,7 +21,6 @@ export default function Main() {
     { value: "f_dbo_t", label: "f_dbo_t" },
     { value: "f_dbo_r", label: "f_dbo_r" },
     { value: "f_ni_r", label: "f_ni_r" },
-    { value: "Q95", label: "Q95" },
     { value: "comp", label: "comp" },
     { value: "Q95_r", label: "Q95_r" },
     { value: "Q95_r_perc", label: "Q95_r_perc" },
@@ -75,15 +77,16 @@ export default function Main() {
   ];
 
   const {
-    handleSetInicialColor,
-    handleSetFinalColor,
-    inicialColor,
-    finalColor,
-    handleResetColors,
     handleSelectAno,
     handleChangeInformations,
     handleSelectCenario,
     ano,
+    selectedSubbacia,
+    handleSelectSubbacia,
+    handleSetMapType,
+    mapType,
+    selectedOption,
+    cenario,
   } = useContext(mapContext);
   const { handleSelectOption, handleSetMicroBaciaBorder } =
     useContext(mapContext);
@@ -94,6 +97,7 @@ export default function Main() {
       content: (
         <div className="map-container">
           <Map />
+          {mapType === "heatmap" ? "" : <Legend />}
         </div>
       ),
     },
@@ -113,27 +117,48 @@ export default function Main() {
     <div className="main">
       <header className="header">
         <h1>NIESA</h1>
+        <ConfigurationModa />
       </header>
       <div className="container">
         <div className="sub-container colorr">
           <div>
             <label>
-              <p>Tipo de análise</p>
+              <p>Tipo de visualização</p>
             </label>
-            <SelectInput options={options} onChange={handleSelectOption} />
+            <SelectInput
+              options={[
+                { value: "heatmap", label: "Mapa de calor" },
+                { value: "regioes", label: "Mapa por regiões" },
+              ]}
+              onChange={handleSetMapType}
+              value={mapType}
+            />
           </div>
           <div>
             <label>
-              <p>Tipo de busca</p>
+              <p>Tipo de análise</p>
             </label>
             <SelectInput
-              onChange={() => {
-                console.log("");
-              }}
+              options={options}
+              onChange={handleSelectOption}
+              value={selectedOption}
+            />
+          </div>
+          <div>
+            <label>
+              <p>Sub-bacia</p>
+            </label>
+            <SelectInput
+              onChange={handleSelectSubbacia}
               options={[
-                { value: "subbacia", label: "Subbacia" },
-                { value: "regioes", label: "Regiões " },
+                { value: "Todos", label: "Todos" },
+                { value: "Manso", label: "Manso" },
+                { value: "AltoCuiaba", label: "Alto Cuiabá" },
+                { value: "MedioCuiaba", label: "Médio Cuiabá" },
+                { value: "BaixoCuiaba", label: "Baixo Cuiabá" },
+                { value: "Coxipo", label: "Coxipó" },
               ]}
+              value={selectedSubbacia}
             />
           </div>
         </div>
@@ -152,6 +177,7 @@ export default function Main() {
                 value: cenario,
                 label: cenario,
               }))}
+              value={cenario}
             />
           </div>
           <div className="input-container">
@@ -163,13 +189,14 @@ export default function Main() {
                 value: year,
                 label: year,
               }))}
+              value={ano}
             />
           </div>
           <div>
             <button
               className="change-btn"
               onClick={() => {
-                handleChangeInformations();
+                handleChangeInformations(selectedSubbacia);
               }}
             >
               change

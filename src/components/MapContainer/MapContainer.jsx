@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   MapContainer,
   TileLayer,
@@ -14,6 +14,8 @@ import "leaflet/dist/leaflet.css";
 import "leaflet-draw/dist/leaflet.draw.css";
 import "./MapContainer.css";
 import { featureGroup } from "leaflet";
+
+import { Legend } from "../Legend/Legend";
 
 export default function Map() {
   const polygons = mtMunicipios.features.map((feature) => {
@@ -43,17 +45,19 @@ export default function Map() {
       [maxLat, maxLng],
     ];
   }
-
   const polygonBounds = calculatePolygonBounds(polygons);
 
   return (
     <MapContainer
       center={[-15.025255971058684, -56.19486484951768]}
-      zoom={6}
+      zoom={8}
       scrollWheelZoom={true}
       className="leaflet-container"
       maxBounds={polygonBounds}
-      minZoom={6}
+      minZoom={7}
+      whenReady={(map) => {
+        console.log("Map is ready");
+      }}
     >
       <TileLayer
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'

@@ -12,6 +12,7 @@ export default function BaciasLayer() {
     inicialColor,
     finalColor,
     loading,
+    mapType,
   } = useContext(mapContext);
   const [option, setOption] = useState("Q95");
   const [border, setBorder] = useState(true);
@@ -56,17 +57,17 @@ export default function BaciasLayer() {
   }, [inicialColor, finalColor]);
 
   function stylePolygon(text) {
-    if (text === "Médio Cuiabá") {
+    if (text === "MedioCuiaba") {
       return {
-        fillColor: "red",
+        fillColor: "#0cf776",
         color: "black",
         weight: 2,
         opacity: 0.5,
         fillOpacity: 0.5,
       };
-    } else if (text === "Alto Cuiabá") {
+    } else if (text === "AltoCuiaba") {
       return {
-        fillColor: "blue",
+        fillColor: "#E6E6FA",
         color: "black",
         weight: 2,
         opacity: 0.5,
@@ -74,23 +75,23 @@ export default function BaciasLayer() {
       };
     } else if (text === "Manso") {
       return {
-        fillColor: "green",
+        fillColor: "#F0FFF0",
         color: "black",
         weight: 2,
         opacity: 0.5,
         fillOpacity: 0.5,
       };
-    } else if (text === "Baixo Cuiabá") {
+    } else if (text === "BaixoCuiaba") {
       return {
-        fillColor: "yellow",
+        fillColor: "#FFFACD",
         color: "black",
         weight: 2,
         opacity: 0.5,
         fillOpacity: 0.5,
       };
-    } else if (text === "Coxipó") {
+    } else if (text === "Coxipo") {
       return {
-        fillColor: "orange",
+        fillColor: "cyan",
         color: "black",
         weight: 2,
         opacity: 0.5,
@@ -124,30 +125,34 @@ export default function BaciasLayer() {
               key={index}
               data={feature}
               style={{
-                fillColor: option
-                  ? getColor(
-                      feature.properties[option],
-                      minValue,
-                      maxValue,
-                      corInicial,
-                      corFinal
-                    )
-                  : stylePolygon(feature.properties.SubBacia).fillColor,
-                color: border
-                  ? "black"
-                  : getColor(
-                      feature.properties[option],
-                      minValue,
-                      maxValue,
-                      corInicial,
-                      corFinal
-                    ),
+                fillColor:
+                  mapType === "heatmap"
+                    ? getColor(
+                        feature.properties[option],
+                        minValue,
+                        maxValue,
+                        corInicial,
+                        corFinal
+                      )
+                    : stylePolygon(feature.properties.SubBacia).fillColor,
+                color:
+                  mapType === "heatmap"
+                    ? getColor(
+                        feature.properties[option],
+                        minValue,
+                        maxValue,
+                        corInicial,
+                        corFinal
+                      )
+                    : stylePolygon(feature.properties.SubBacia).fillColor,
                 weight: 2,
-                opacity: 0.5,
+                opacity: 1,
                 fillOpacity: 1,
               }}
             >
               <Popup>
+                Cenario: {feature.properties.cenario} <br />
+                Ano: {feature.properties.ano} <br />
                 Nome da micro SubBacia: {feature.properties.SubBacia} <br />
                 {option}: {feature.properties[option]}
               </Popup>
